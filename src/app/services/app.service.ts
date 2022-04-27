@@ -12,14 +12,20 @@ export class ApplicationDispatcherService {
         var result
 
         const headers = new HttpHeaders()
-            .set('content-Type', 'application/x-www-form-urlencoded');
+        .set('Access-Control-Allow-Headers','*')
+        .set('Access-Control-Allow-Origin','*')
+        .set('Access-Control-Allow-Methods','POST, GET')
+        .set('Access-Control-Max-Age','86400')
+        // .set('content-Type', 'application/x-www-form-urlencoded');
 
-        const body = {
+        const bodyJSon = {
             client_id: 't7cE36eeXVFWAUtWcMgpPyqc2KAzWkSf',
             client_secret: 'hHYUuzdYOWUYqFWu',
             username: 'CorretorC',
             password: 'SenhaC'
         };
+
+        const body  = 'client_id=' + bodyJSon.client_id + '&client_secret=' + bodyJSon.client_secret + '&username=' + bodyJSon.username + '&password=' + bodyJSon.password;
 
         this.http.post<any>(`${this.INSURER_URI}Autenticacao/Token?grant_type=client_credentials`, body, { 'headers': headers })
             .subscribe({
