@@ -6,10 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { AuthenticationService } from './services/authentication.service';
 import { ApplicationDispatcherService } from './services/app.service';
-import { DispatcherService } from './services/dispatcher.service';
-import { ApplicationHttpClient } from './services/application-http-client';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent
@@ -20,13 +18,13 @@ import { ApplicationHttpClient } from './services/application-http-client';
     MatSnackBarModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    HttpClientModule,
     MatToolbarModule
   ],
   providers: [
     ApplicationDispatcherService,
-    AuthenticationService,
-    DispatcherService,
-    ApplicationHttpClient  
+    HttpClientModule,
+    HttpClient
   ],
   bootstrap: [AppComponent]
 })

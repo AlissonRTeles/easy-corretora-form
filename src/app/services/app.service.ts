@@ -1,16 +1,45 @@
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { DispatcherService } from "./dispatcher.service";
-
 @Injectable()
 export class ApplicationDispatcherService {
     private INSURER_URI: string = ('https://test-apis.libertyseguros.com.br/cotador/auto/sandbox/v1/');
+    public userToken: string;
 
-    constructor(private dispatcherService: DispatcherService) { }
+    constructor(private http: HttpClient) { }
 
-    public getCotation = (): Observable<any> => {
-        const url = `${this.INSURER_URI}cotation`;
-        return this.dispatcherService.postAsync<any>(url, {
+    public getToken = (): Observable<any> => {
+        var result
+
+        const headers = new HttpHeaders()
+            .set('content-Type', 'application/x-www-form-urlencoded');
+
+        const body = {
+            client_id: 't7cE36eeXVFWAUtWcMgpPyqc2KAzWkSf',
+            client_secret: 'hHYUuzdYOWUYqFWu',
+            username: 'CorretorC',
+            password: 'SenhaC'
+        };
+
+        this.http.post<any>(`${this.INSURER_URI}Autenticacao/Token?grant_type=client_credentials`, body, { 'headers': headers })
+            .subscribe({
+                next: data => {
+                    result = data;
+                },
+                error: error => {
+                    console.error('There was an error!', error);
+                }
+            })
+        return result;
+    }
+
+    public getCotation(): any {
+        var result
+
+        const headers = new HttpHeaders()
+            .set('Content-Type', 'application/x-www-form-urlencoded');
+
+        const body = {
             "CalculateRequestAuto": {
                 "BrokerProposalNumber": "",
                 "SalesPartnerCode": "19",
@@ -175,11 +204,28 @@ export class ApplicationDispatcherService {
                     ]
                 }
             }
-        });
+        }
+
+        this.http.post<any>(`${this.INSURER_URI}Cotacao`, body, { 'headers': headers })
+            .subscribe({
+                next: data => {
+                    result = data;
+                },
+                error: error => {
+                    console.error('There was an error!', error);
+                }
+            })
+        return result;
     }
-    public getProposal = (): Observable<any> => {
-        const url = `${this.INSURER_URI}proposal`;
-        return this.dispatcherService.postAsync<any>(url, {
+
+    public getProposal(): any {
+        var result
+
+        const headers = new HttpHeaders()
+            .set('Content-Type', 'application/json')
+            .set('Authorization', 'Bearer hnbWsVFNpwjk6XPCA9ySbvIlR5lA');
+
+        const body = {
             "ValidateRequestAuto": {
                 "CalculateRequestAuto": {
                     "BrokerProposalNumber": "5026202",
@@ -1149,6 +1195,22 @@ export class ApplicationDispatcherService {
                     "ThirdPublicIdentification": "85135710590"
                 }
             }
-        });
+        }
+
+        this.http.post<any>(`${this.INSURER_URI}Proposta`, body, { 'headers': headers })
+            .subscribe({
+                next: data => {
+                    result = data;
+                },
+                error: error => {
+                    console.error('There was an error!', error);
+                }
+            })
+        return result;
     }
+
 }
+
+
+
+
