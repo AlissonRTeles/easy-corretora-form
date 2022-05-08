@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { CalculateRequestAuto } from "../models/calculate-request-auto.models";
 @Injectable()
 export class ApplicationDispatcherService {
     private INSURER_URI: string = ('https://test-apis.libertyseguros.com.br/cotador/auto/sandbox/v1/');
@@ -12,10 +13,10 @@ export class ApplicationDispatcherService {
         var result
 
         const headers = new HttpHeaders()
-        .set('Access-Control-Allow-Headers','*')
-        .set('Access-Control-Allow-Origin','*')
-        .set('Access-Control-Allow-Methods','POST, GET')
-        .set('Access-Control-Max-Age','86400')
+            .set('Access-Control-Allow-Headers', '*')
+            .set('Access-Control-Allow-Origin', '*')
+            .set('Access-Control-Allow-Methods', 'POST, GET')
+            .set('Access-Control-Max-Age', '86400')
         // .set('content-Type', 'application/x-www-form-urlencoded');
 
         const bodyJSon = {
@@ -25,7 +26,7 @@ export class ApplicationDispatcherService {
             password: 'SenhaC'
         };
 
-        const body  = 'client_id=' + bodyJSon.client_id + '&client_secret=' + bodyJSon.client_secret + '&username=' + bodyJSon.username + '&password=' + bodyJSon.password;
+        const body = 'client_id=' + bodyJSon.client_id + '&client_secret=' + bodyJSon.client_secret + '&username=' + bodyJSon.username + '&password=' + bodyJSon.password;
 
         this.http.post<any>(`${this.INSURER_URI}Autenticacao/Token?grant_type=client_credentials`, body, { 'headers': headers })
             .subscribe({
@@ -39,180 +40,180 @@ export class ApplicationDispatcherService {
         return result;
     }
 
-    public getCotation(): any {
+    public getCotation(requestBody: CalculateRequestAuto): any {
         var result
 
         const headers = new HttpHeaders()
             .set('Content-Type', 'application/x-www-form-urlencoded');
 
-        const body = {
-            "CalculateRequestAuto": {
-                "BrokerProposalNumber": "",
-                "SalesPartnerCode": "19",
-                "StartDate": "2020-07-30",
-                "EndDate": "2021-07-30",
-                "CommissionPct": "15.0",
-                "PolicyHolderIsEmployee": "F",
-                "CommercialProductCode": "31111",
-                "SalesStructure": {
-                    "PublicIdNumber": "31002950888"
-                },
-                "Broker": {
-                    "BrokerCode": "99005736",
-                    "BrokerBranchCode": "0003",
-                    "InternalBranchCode": "0116"
-                },
-                "CommissionParticipation": {
-                    "BrokerCommission": [
-                        {
-                            "BrokerCode": "99005736",
-                            "BrokerBranchCode": "0003",
-                            "ParticipationPct": "100.0"
-                        }
-                    ]
-                },
-                "Vehicles": {
-                    "Vehicle": [
-                        {
-                            "SequenceNumber": "1",
-                            "ModelYear": "2018",
-                            "ManufactureYear": "2018",
-                            "Is0KM": "F",
-                            "IsDealerOwnerVehicle": "F",
-                            "ValueEstimationType": "R",
-                            "SurchargeFactor": "0.00",
-                            "HasLoJack": "F",
-                            "LoJackCode": "",
-                            "AdjustmentFactor": "1.00",
-                            "ZipCode": "04175",
-                            "CategoryCode": "10",
-                            "FIPECode": "0044334",
-                            "Fuel": "1",
-                            "Plate": "",
-                            "Chassis": "99ABJ68U4J4000187",
-                            "IsRgnDiscSupported": "F",
-                            "VehicleOwnerIsPolicyHolder": "T",
-                            "UsageCode": "1",
-                            "AdaptationCodes": {
-                                "AdaptationCode": []
-                            },
-                            "PotentialDrivers": {
-                                "PotentialDriver": [
-                                    {
-                                        "IsPolicyHolder": "T",
-                                        "BirthDate": "1979-10-05",
-                                        "PublicIdNumber": "85135710590",
-                                        "Gender": "M",
-                                        "Name": "TESTE SEGURADO",
-                                        "IsDriver": "T",
-                                        "DaysPerWeek": "3",
-                                        "IsReferenceDriver": "T",
-                                        "MaritalStatus": "S",
-                                        "DriverType": "1",
-                                        "IsIndividual": "T",
-                                        "RelationalTypeCode": "0"
-                                    },
-                                    {
-                                        "IsPolicyHolder": "T",
-                                        "BirthDate": "1979-10-05",
-                                        "PublicIdNumber": "85135710590",
-                                        "Gender": "M",
-                                        "Name": "TESTE SEGURADO",
-                                        "IsDriver": "T",
-                                        "DaysPerWeek": "3",
-                                        "IsReferenceDriver": "T",
-                                        "MaritalStatus": "S",
-                                        "DriverType": "2",
-                                        "IsIndividual": "T",
-                                        "RelationalTypeCode": "1"
-                                    },
-                                    {
-                                        "IsPolicyHolder": "T",
-                                        "BirthDate": "1979-10-05",
-                                        "PublicIdNumber": "85135710590",
-                                        "Gender": "M",
-                                        "Name": "TESTE SEGURADO",
-                                        "IsDriver": "T",
-                                        "DaysPerWeek": "3",
-                                        "IsReferenceDriver": "T",
-                                        "MaritalStatus": "S",
-                                        "DriverType": "3",
-                                        "IsIndividual": "T",
-                                        "RelationalTypeCode": "1"
-                                    }
-                                ]
-                            },
-                            "ReferenceDriverProfile": {
-                                "Question": [
-                                    {
-                                        "QuestionNumber": "143",
-                                        "AnswerChoiceCode": "1324"
-                                    },
-                                    {
-                                        "QuestionNumber": "147",
-                                        "AnswerChoiceCode": "1351"
-                                    },
-                                    {
-                                        "QuestionNumber": "148",
-                                        "AnswerChoiceCode": "1353"
-                                    },
-                                    {
-                                        "QuestionNumber": "149",
-                                        "AnswerChoiceCode": "1357"
-                                    },
-                                    {
-                                        "QuestionNumber": "150",
-                                        "AnswerChoiceCode": "1361"
-                                    }
-                                ]
-                            },
-                            "VehicleCoverages": {
-                                "VehicleCoverage": [
-                                    {
-                                        "CoverageReference": {
-                                            "CoverageCode": "31001",
-                                            "LineItemCode": "A01"
-                                        },
-                                        "InsuredAmount": "0.00",
-                                        "OptionalPercentage": "0",
-                                        "Deductible": {
-                                            "Code": "10",
-                                            "Level": "1.0"
-                                        }
-                                    },
-                                    {
-                                        "CoverageReference": {
-                                            "CoverageCode": "53001",
-                                            "LineItemCode": "A07"
-                                        },
-                                        "InsuredAmount": "100000.00",
-                                        "OptionalPercentage": "0",
-                                        "Deductible": {
-                                            "Code": "0",
-                                            "Level": "0.0"
-                                        }
-                                    },
-                                    {
-                                        "CoverageReference": {
-                                            "CoverageCode": "53001",
-                                            "LineItemCode": "A08"
-                                        },
-                                        "InsuredAmount": "100000.00",
-                                        "OptionalPercentage": "0",
-                                        "Deductible": {
-                                            "Code": "0",
-                                            "Level": "0.0"
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            }
-        }
+        // const body = {
+        //     "CalculateRequestAuto": {
+        //         "BrokerProposalNumber": "",
+        //         "SalesPartnerCode": "19",
+        //         "StartDate": "2020-07-30",
+        //         "EndDate": "2021-07-30",
+        //         "CommissionPct": "15.0",
+        //         "PolicyHolderIsEmployee": "F",
+        //         "CommercialProductCode": "31111",
+        //         "SalesStructure": {
+        //             "PublicIdNumber": "31002950888"
+        //         },
+        //         "Broker": {
+        //             "BrokerCode": "99005736",
+        //             "BrokerBranchCode": "0003",
+        //             "InternalBranchCode": "0116"
+        //         },
+        //         "CommissionParticipation": {
+        //             "BrokerCommission": [
+        //                 {
+        //                     "BrokerCode": "99005736",
+        //                     "BrokerBranchCode": "0003",
+        //                     "ParticipationPct": "100.0"
+        //                 }
+        //             ]
+        //         },
+        //         "Vehicles": {
+        //             "Vehicle": [
+        //                 {
+        //                     "SequenceNumber": "1",
+        //                     "ModelYear": "2018",
+        //                     "ManufactureYear": "2018",
+        //                     "Is0KM": "F",
+        //                     "IsDealerOwnerVehicle": "F",
+        //                     "ValueEstimationType": "R",
+        //                     "SurchargeFactor": "0.00",
+        //                     "HasLoJack": "F",
+        //                     "LoJackCode": "",
+        //                     "AdjustmentFactor": "1.00",
+        //                     "ZipCode": "04175",
+        //                     "CategoryCode": "10",
+        //                     "FIPECode": "0044334",
+        //                     "Fuel": "1",
+        //                     "Plate": "",
+        //                     "Chassis": "99ABJ68U4J4000187",
+        //                     "IsRgnDiscSupported": "F",
+        //                     "VehicleOwnerIsPolicyHolder": "T",
+        //                     "UsageCode": "1",
+        //                     "AdaptationCodes": {
+        //                         "AdaptationCode": []
+        //                     },
+        //                     "PotentialDrivers": {
+        //                         "PotentialDriver": [
+        //                             {
+        //                                 "IsPolicyHolder": "T",
+        //                                 "BirthDate": "1979-10-05",
+        //                                 "PublicIdNumber": "85135710590",
+        //                                 "Gender": "M",
+        //                                 "Name": "TESTE SEGURADO",
+        //                                 "IsDriver": "T",
+        //                                 "DaysPerWeek": "3",
+        //                                 "IsReferenceDriver": "T",
+        //                                 "MaritalStatus": "S",
+        //                                 "DriverType": "1",
+        //                                 "IsIndividual": "T",
+        //                                 "RelationalTypeCode": "0"
+        //                             },
+        //                             {
+        //                                 "IsPolicyHolder": "T",
+        //                                 "BirthDate": "1979-10-05",
+        //                                 "PublicIdNumber": "85135710590",
+        //                                 "Gender": "M",
+        //                                 "Name": "TESTE SEGURADO",
+        //                                 "IsDriver": "T",
+        //                                 "DaysPerWeek": "3",
+        //                                 "IsReferenceDriver": "T",
+        //                                 "MaritalStatus": "S",
+        //                                 "DriverType": "2",
+        //                                 "IsIndividual": "T",
+        //                                 "RelationalTypeCode": "1"
+        //                             },
+        //                             {
+        //                                 "IsPolicyHolder": "T",
+        //                                 "BirthDate": "1979-10-05",
+        //                                 "PublicIdNumber": "85135710590",
+        //                                 "Gender": "M",
+        //                                 "Name": "TESTE SEGURADO",
+        //                                 "IsDriver": "T",
+        //                                 "DaysPerWeek": "3",
+        //                                 "IsReferenceDriver": "T",
+        //                                 "MaritalStatus": "S",
+        //                                 "DriverType": "3",
+        //                                 "IsIndividual": "T",
+        //                                 "RelationalTypeCode": "1"
+        //                             }
+        //                         ]
+        //                     },
+        //                     "ReferenceDriverProfile": {
+        //                         "Question": [
+        //                             {
+        //                                 "QuestionNumber": "143",
+        //                                 "AnswerChoiceCode": "1324"
+        //                             },
+        //                             {
+        //                                 "QuestionNumber": "147",
+        //                                 "AnswerChoiceCode": "1351"
+        //                             },
+        //                             {
+        //                                 "QuestionNumber": "148",
+        //                                 "AnswerChoiceCode": "1353"
+        //                             },
+        //                             {
+        //                                 "QuestionNumber": "149",
+        //                                 "AnswerChoiceCode": "1357"
+        //                             },
+        //                             {
+        //                                 "QuestionNumber": "150",
+        //                                 "AnswerChoiceCode": "1361"
+        //                             }
+        //                         ]
+        //                     },
+        //                     "VehicleCoverages": {
+        //                         "VehicleCoverage": [
+        //                             {
+        //                                 "CoverageReference": {
+        //                                     "CoverageCode": "31001",
+        //                                     "LineItemCode": "A01"
+        //                                 },
+        //                                 "InsuredAmount": "0.00",
+        //                                 "OptionalPercentage": "0",
+        //                                 "Deductible": {
+        //                                     "Code": "10",
+        //                                     "Level": "1.0"
+        //                                 }
+        //                             },
+        //                             {
+        //                                 "CoverageReference": {
+        //                                     "CoverageCode": "53001",
+        //                                     "LineItemCode": "A07"
+        //                                 },
+        //                                 "InsuredAmount": "100000.00",
+        //                                 "OptionalPercentage": "0",
+        //                                 "Deductible": {
+        //                                     "Code": "0",
+        //                                     "Level": "0.0"
+        //                                 }
+        //                             },
+        //                             {
+        //                                 "CoverageReference": {
+        //                                     "CoverageCode": "53001",
+        //                                     "LineItemCode": "A08"
+        //                                 },
+        //                                 "InsuredAmount": "100000.00",
+        //                                 "OptionalPercentage": "0",
+        //                                 "Deductible": {
+        //                                     "Code": "0",
+        //                                     "Level": "0.0"
+        //                                 }
+        //                             }
+        //                         ]
+        //                     }
+        //                 }
+        //             ]
+        //         }
+        //     }
+        // }
 
-        this.http.post<any>(`${this.INSURER_URI}Cotacao`, body, { 'headers': headers })
+        this.http.post<any>(`${this.INSURER_URI}Cotacao`, requestBody, { 'headers': headers })
             .subscribe({
                 next: data => {
                     result = data;

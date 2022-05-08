@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CalculateRequestAuto } from './models/calculate-request-auto.models';
 import { ApplicationDispatcherService } from './services/app.service';
 
 @Component({
@@ -8,12 +9,14 @@ import { ApplicationDispatcherService } from './services/app.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  public cotationRequestBody: CalculateRequestAuto;
 
   constructor(
     private snackBar: MatSnackBar,
     private appDispatcherService: ApplicationDispatcherService) {
-
+      
   }
+
   title = 'easy-corretora-form';
   private authToken: string;
 
@@ -26,7 +29,7 @@ export class AppComponent {
   }
 
   getCotation(): void {
-    this.appDispatcherService.getCotation().subscribe((cotation) => {
+    this.appDispatcherService.getCotation(this.cotationRequestBody).subscribe((cotation) => {
       if (cotation) {
         this.snackBar.open(cotation);
       }
